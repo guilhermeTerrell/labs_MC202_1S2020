@@ -38,6 +38,14 @@ p_no cria_lista_circular(p_no lista, int n){
     return lista;
 }
 
+p_no headLista(p_no lista, int c){
+    int i=0;
+    for(i=0; i<c; i++){
+        lista=lista->prox;
+    }
+    return lista;
+}
+
 void imprime_lista_circ_ligada(p_no lista){
     p_no atual;
     for(atual = lista->prox; atual!=lista; atual = atual->prox){
@@ -112,11 +120,9 @@ int main(){
                 backupAtend2 = atend2->prox;
                 if(backupAtend1 == atend2){
                     backupAtend1 = backupAtend1->ant;
-                    printf("backupAtend1->senha%d\n", backupAtend1->senha);
                 }
                 if(backupAtend2 == atend1){
                     backupAtend2 = backupAtend2->prox;
-                    printf("backupAtend1->senha%d\n", backupAtend1->senha);
                 }
                 printf("%d %d\n", atend1->senha, atend2->senha);
                 //remover nós
@@ -147,7 +153,7 @@ int main(){
             }
         }
     }
-    if(lista->prox == lista){
+    if(proximo == lista){
         printf("%d %d\n", atend1->senha, atend2->senha);
         free(lista);
     }
