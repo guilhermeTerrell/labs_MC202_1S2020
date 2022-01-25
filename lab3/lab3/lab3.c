@@ -64,6 +64,14 @@ p_no movimenta_atend2(p_no atend2, int passo2){
     return atend2;
 }
 
+p_no posicao_inicial(p_no atend, int c){
+    int i=0;
+    for(i=0; i<c; i++){
+        atend = atend->prox;
+    }
+    return atend;
+}
+
 p_no remover_no(p_no lista, p_no atend){
     p_no remover = atend;
     atend->ant->prox = atend->prox;
@@ -74,20 +82,74 @@ p_no remover_no(p_no lista, p_no atend){
 
 int main(){
     int n, c, k, l, i=0;
-    p_no lista, atual, atend1, atend2;
+    int liberado = 1;
+    p_no lista, proximo, atend1, atend2, backupAtend1, backupAtend2;
     //Inicialização da lista
     lista = cria_lista_vazia();
     printf("Insira os dados: N, C, k e l\n");
     scanf("%d %d %d %d", &n, &c, &k, &l);
     lista = cria_lista_circular(lista, n);
-    //inicialização dos ponteiros atend1 e atend2
-    //Inicialmente os ponteiros atend1 e atend2 apontam para o primeiro nó da lista
     atend1 = lista;
     atend2 = lista;
+    //Inicialização dos ponteiros atend1 e atend2
+    atend1 = posicao_inicial(atend1, c);
+    atend2 = posicao_inicial(atend2, c);
+    //Deslocamento dos ponteiros atend1 e atend2
     atend1 = movimenta_atend1(atend1, k);
     atend2 = movimenta_atend2(atend2, l);
-    lista = remover_no(lista, atend1);
-    lista = remover_no(lista, atend2);
-    imprime_lista_circ_ligada(lista);
+    for(proximo = lista->prox; proximo != lista; proximo = proximo->prox){
+        if((atend1 == lista) || (atend2 == lista)){
+            lista = lista->prox;
+            liberado = 0;
+        }
+        else{
+            liberado = 0;
+        }
+        if(liberado == 0){
+            if(atend1 != atend2){
+                //salvar posições dos ponteiros
+                backupAtend1 = atend1->ant;
+                backupAtend2 = atend2->prox;
+                if(backupAtend1 == atend2){
+                    backupAtend1 = backupAtend1->ant;
+                    printf("backupAtend1->senha%d\n", backupAtend1->senha);
+                }
+                if(backupAtend2 == atend1){
+                    backupAtend2 = backupAtend2->prox;
+                    printf("backupAtend1->senha%d\n", backupAtend1->senha);
+                }
+                printf("%d %d\n", atend1->senha, atend2->senha);
+                //remover nós
+                lista = remover_no(lista, atend1);
+                lista = remover_no(lista, atend2);
+                //retomar posições dos ponteiros
+                atend1 = backupAtend1;
+                atend2 = backupAtend2;
+                //movimentar ponteiros
+                atend1 = movimenta_atend1(atend1, k);
+                atend2 = movimenta_atend2(atend2, l);
+                liberado = 1;
+            }
+            else{
+                //salvar posições dos ponteiros
+                backupAtend1 = atend1->ant;
+                backupAtend2 = atend2->prox;
+                printf("%d %d\n", atend1->senha, atend2->senha);
+                //remover nós
+                lista = remover_no(lista, atend1);
+                //retomar posições dos ponteiros
+                atend1 = backupAtend1;
+                atend2 = backupAtend2;
+                //movimentar ponteiros
+                atend1 = movimenta_atend1(atend1, k);
+                atend2 = movimenta_atend2(atend2, l);
+                liberado = 1;
+            }
+        }
+    }
+    if(lista->prox == lista){
+        printf("%d %d\n", atend1->senha, atend2->senha);
+        free(lista);
+    }
     return 0;
 }

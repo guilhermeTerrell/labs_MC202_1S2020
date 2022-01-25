@@ -1,5 +1,9 @@
 # depslib dependency file v1.0
-1643048655 source:c:\users\ml162\desktop\programas em c\labs_202_1s2020\lab3\lab3\lab3.c
+1643135111 source:c:\users\ml162\desktop\programas em c\labs_202_1s2020\lab3\lab3\lab3.c
+	<stdio.h>
+	<stdlib.h>
+
+1643129585 source:c:\users\ml162\desktop\programas em c\labs_202_1s2020\lab3\lab3\teste_lab3.c
 	<stdio.h>
 	<stdlib.h>
 
