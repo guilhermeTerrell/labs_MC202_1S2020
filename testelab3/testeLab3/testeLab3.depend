@@ -1,0 +1,5 @@
+# depslib dependency file v1.0
+1643228558 source:c:\users\ml162\desktop\programas em c\labs_202_1s2020\testelab3\testelab3\testelab3.c
+	<stdio.h>
+	<stdlib.h>
+
