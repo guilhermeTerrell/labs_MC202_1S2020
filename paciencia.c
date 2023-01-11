@@ -15,7 +15,8 @@
                 
                 Os elementos da pilha serão structs que conterão:
                     1-) O naipe da carta;
-                    2-) Um ponteiro para o próximo nó
+                    2-) Uma flag que indica se a carta está aberta ou virada
+                    3-) Um ponteiro para o próximo nó
 
 */
 
@@ -34,15 +35,23 @@ typedef struct no{
 
 
 /**************                 Variáveis globais       *****************************/
-no * top = NULL; /*ponteiro que aponta para o último elemento da pilha*/
+//no * top = NULL; /*ponteiro que aponta para o último elemento da pilha*/
 no * temp = NULL; /*ponteiro que será utilizado temporariamente para criar / deletar nós da pilha*/
 
+/*ponteiros para as pilhas de jogo*/
+no * J1 = NULL; /*pilha de jogo 1*/
+no * J2 = NULL; /*pilha de jogo 2*/
+no * J3 = NULL; /*pilha de jogo 3*/
+no * J4 = NULL; /*pilha de jogo 4*/
+no * J5 = NULL; /*pilha de jogo 5*/
+no * J6 = NULL; /*pilha de jogo 6*/
+no * J7 = NULL; /*pilha de jogo 7*/
 
 /******************             Protótipos das funções  *****************************/
-void push(void);
-void pop(void);
+void push(no *);
+void pop(no *);
 void criaNo(void);
-unsigned char pilhaVazia(void);
+unsigned char pilhaVazia(no *);
 
 
 /*****************               Definição das funções     ***************************/
@@ -56,20 +65,22 @@ void criaNo(){
 
 /*
     Função:     pilhaVazia
-    Descrição:  Função que verifica se top = NULL. Se for, então a pilha está vazia.
+    Descrição:  Função que verifica se o ponteiro top = NULL. Se for, então a pilha está vazia.
                 Se top == NULL: retorna 1
                 Senão:          retorna 0
+    Argumentos: ponteiro que aponta para o top da pilha em questão
 */
-unsigned char pilhaVazia(){
+unsigned char pilhaVazia(no * top){
     return(top == NULL) ? 1 : 0;
 }
 
 /*
     Função:     push
     Descrição:  Inserir elementos em um pilha
+    Argumentos: ponteiro que aponta para o top da pilha em questão
 */
-void push(){
-    if(pilhaVazia()){
+void push(no * top){
+    if(pilhaVazia(top)){
         /*inserir primeiro nó na pilha*/
         printf("estava vazia mesmo\n");
         top = temp; /*ao receeber o endereço de temp, top passa a apontar para o novo nó*/
@@ -78,9 +89,9 @@ void push(){
 
     else{
         /*Já existe ao menos um nó na pilha*/
-            printf("não estava vazia");
-            temp -> ptr_prox = top; /*ptr_prox do novo nó aponta para o último nó da pilha*/
-            top = temp; /*top é atualizado para o novo nó que será o novo topo da pilha*/
+        printf("não estava vazia");
+        temp -> ptr_prox = top; /*ptr_prox do novo nó aponta para o último nó da pilha*/
+        top = temp; /*top é atualizado para o novo nó que será o novo topo da pilha*/
     }
 }
 
@@ -88,7 +99,7 @@ void push(){
 int main(){
 
     criaNo();
-    push();
+    push(J1);
     
     return 0;
 }
