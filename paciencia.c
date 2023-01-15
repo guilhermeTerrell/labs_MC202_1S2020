@@ -81,13 +81,20 @@ typedef carta * pilha_cartas; /*definindo ponteiro para carta como um novo tipo 
 pilha_cartas top = NULL; /*ponteiro que aponta para o último elemento da pilha*/
 pilha_cartas temp = NULL; /*ponteiro que será utilizado temporariamente para criar / deletar cartas da pilha*/
 
-pilha_cartas top_J1 = NULL; /*ponteiro que aponta para o topo da pilha J1*/
-pilha_cartas top_J2 = NULL; /*ponteiro que aponta para o topo da pilha J2*/
-pilha_cartas top_J3 = NULL; /*ponteiro que aponta para o topo da pilha J3*/
-pilha_cartas top_J4 = NULL; /*ponteiro que aponta para o topo da pilha J4*/
-pilha_cartas top_J5 = NULL; /*ponteiro que aponta para o topo da pilha J5*/
-pilha_cartas top_J6 = NULL; /*ponteiro que aponta para o topo da pilha J6*/
-pilha_cartas top_J7 = NULL; /*ponteiro que aponta para o topo da pilha J7*/
+pilha_cartas top_J1 = NULL; /*ponteiro que aponta para o topo da pilha de jogo J1*/
+pilha_cartas top_J2 = NULL; /*ponteiro que aponta para o topo da pilha de jogo J2*/
+pilha_cartas top_J3 = NULL; /*ponteiro que aponta para o topo da pilha de jogo J3*/
+pilha_cartas top_J4 = NULL; /*ponteiro que aponta para o topo da pilha de jogo J4*/
+pilha_cartas top_J5 = NULL; /*ponteiro que aponta para o topo da pilha de jogo J5*/
+pilha_cartas top_J6 = NULL; /*ponteiro que aponta para o topo da pilha de jogo J6*/
+pilha_cartas top_J7 = NULL; /*ponteiro que aponta para o topo da pilha de jogo J7*/
+
+pilha_cartas estoque = NULL; /*ponteiro que aponta para o topo da pilha de estoque*/
+
+pilha_cartas saida_ouros = NULL; /*ponteiro que aponta para o topo da pilha de saída do naipe ouros*/
+pilha_cartas saida_paus = NULL; /*ponteiro que aponta para o topo da pilha de saída do naipe paus*/
+pilha_cartas saida_copas = NULL; /*ponteiro que aponta para o topo da pilha de saída do naipe copas*/
+pilha_cartas saida_espadas = NULL; /*ponteiro que aponta para o topo da pilha de saída do naipe espadas*/
 
 /*
     Devemos utilizar ponteiro para ponteiro pois usaremos os ponteiros que apontam para o topo de cada uma
@@ -108,7 +115,7 @@ void push(pilha_cartas *);
 void pop(pilha_cartas *);
 void criaNo(void);
 unsigned char pilhaVazia(pilha_cartas *);
-void peek(void);
+void peek(pilha_cartas *);
 
 
 /*****************               Definição das funções     ***************************/
@@ -174,8 +181,22 @@ void pop(pilha_cartas * ptrTOptr){
     Descrição:  Consultar o dado armazenado no último nó da pilha
     Argumentos: Ponteiro que aponta para a pilha em questão
 */
-void peek(void){
-    
+void peek(pilha_cartas * ptrTOptr){
+    printf("valor: %d\n", (*ptrTOptr) -> valor);
+    printf("naipe: %s\n", (*ptrTOptr) -> naipe);
+    if((*ptrTOptr) -> cor == VERMELHA){
+        printf("cor: vermelha\n");
+    }
+    if((*ptrTOptr) -> cor == PRETA){
+        printf("cor: preta\n");
+    }
+    if((*ptrTOptr) -> abertaOuVirada){
+        printf("estado: carta aberta\n");
+    }
+    else{
+        printf("estado: carta virada\n");
+    }
+    printf("ptr_prox: %d\n", (*ptrTOptr) -> ptr_prox_carta);
 }
 
 int main(){
@@ -187,21 +208,15 @@ int main(){
     /*naipe da carta*/
     (top_J1 -> naipe)[0] = 'O';
     if(((top_J1 -> naipe)[0] == 'O') || ((top_J1 -> naipe)[0] == 'C')){
-        printf("carta vermelha\n");
         top_J1 -> cor = VERMELHA;
     }
     if(((top_J1 -> naipe)[0] == 'P') || ((top_J1 -> naipe)[0] == 'E')){
-        printf("carta preta\n");
         top_J1 -> cor = PRETA;
     }
     
-    top_J1 -> abertaOuVirada = CARTA_ABERTA;
+    top_J1 -> abertaOuVirada = CARTA_VIRADA;
 
-    printf("valor: %d\n", top_J1 -> valor);
-    printf("naipe: %s\n", top_J1 -> naipe);
-    printf("cor: %d\n", top_J1 -> cor);
-    printf("estado: %d\n", top_J1 -> abertaOuVirada);
-    printf("ptr_prox: %d\n", top_J1 -> ptr_prox_carta);
+    peek(ptr_to_top_J1);
     
     pop(ptr_to_top_J1);
     
